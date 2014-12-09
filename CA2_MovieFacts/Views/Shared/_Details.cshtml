@@ -1,0 +1,31 @@
+﻿@model CA2_MovieFacts.Models.Actor
+@{
+    ViewBag.Title = "_Details";
+}
+<div class="container col-md-12">
+
+    <div class="panel panel-info">
+        <div class="panel-heading"><h2>Actor Details - @Html.DisplayFor(model => model.ActorName)</h2></div>
+    </div>
+
+    <div class="well">
+        <div class="panel-body">
+
+            <fieldset>
+                <a class="list-group">
+                    <a href="#" class="list-group-item active col-md-12">
+                        <h4 class="list-group-item-heading">@Html.DisplayNameFor(model => model.Biography)</h4>
+                        <p class="list-group-item-text">@Html.DisplayFor(model => model.Biography)</p>
+                    </a>
+            </fieldset>
+
+            <p>
+                <div class="btn-group-vertical btn-block">
+                    @Html.ActionLink("Edit Actor Details", "Edit", "Actor", new { id = Model.ActorId}, new { @class = "btn btn-primary" })
+                </div>
+            </p>
+
+</div>@*div body*@
+    </div>@*div well*@
+</div>@*div container*@
+

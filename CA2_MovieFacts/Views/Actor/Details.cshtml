@@ -1,0 +1,79 @@
+﻿@model CA2_MovieFacts.Models.Actor
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container col-md-6">
+
+    <div class="panel panel-success">
+        <div class="panel-heading"><h2>Actor Details - @Html.DisplayFor(model => model.ActorName)</h2></div>
+    </div>
+
+    <div class="well">
+        <div class="panel-body">
+
+    <fieldset>
+        <a class="list-group">
+            <a href="#" class="list-group-item active">
+                <h4 class="list-group-item-heading">@Html.DisplayNameFor(model => model.ActorName)</h4>
+                <p class="list-group-item-text">@Html.DisplayFor(model => model.ActorName)</p>
+            </a>
+
+            <a href="#" class="list-group-item active">
+                <h4 class="list-group-item-heading">@Html.DisplayNameFor(model => model.Biography)</h4>
+                <p class="list-group-item-text">@Html.DisplayFor(model => model.Biography)</p>
+            </a>
+        </a>
+    </fieldset>
+
+    <p><h4>ScreenNames and Movies for @Html.DisplayFor(model => model.ActorName)</h4>
+        <h5><em>(Click Movie listed below for further details)</em></h5></p>
+    @*Show Actor, ScreenName and Movie(s) this actor is in*@
+    @foreach (var item in Model.Movies)
+    {
+        <p>
+            <ul style="list-style-type:square">
+                <li>
+                    "@item.ActorScreenName" in:
+                    <a onclick="showMovie(@item.Movie.MovieId)"><u>@item.Movie.MovieTitle"</u></a>@*brings up the partial view with Movie details*@
+                </li>
+            </ul>
+        </p>
+    }
+
+    <div class="btn-group btn-group-justified btn-default">
+        @Html.ActionLink("Edit Actor details", "Edit", new { id = Model.ActorId }, new { @class = "btn btn-primary" })
+        
+        <a class="btn btn-primary" href="@Url.Action("Index")">
+            <span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Back to List of Actors
+        </a>
+        @*@Html.ActionLink("Back to List of Movies", "Index", null, new { @class = "btn btn-primary" })*@
+    </div>
+
+    <div class="btn btn-warning btn-block" onclick="showScreenName()">
+        Add a ScreenName for an Actor in a Movie
+    </div>
+
+
+</div>@*div body*@
+    </div>@*div well*@
+</div>@*div container*@
+
+<div class="col-xs-12 col-md-6" id="PartialView1"></div> @*Movie details*@
+<div class="col-xs-12 col-md-6" id="PartialView2"></div> @*ScreenName*@
+
+
+@section scripts
+{
+    <script>
+        function showMovie(MovieId) {
+            // When movie name clicked, call Controller action method to return partial view. Ajax it into place
+            $('#PartialView1').load('@Url.Action("MovieDetails")' + '?id=' + MovieId).show();
+        }
+        function showScreenName() {
+            // When create ScreenName clicked, call the Create PartialView in the ScreenName controller
+            $('#PartialView2').load('@Url.Action("Create", "ScreenName")').show();
+        }
+    </script>
+}

@@ -1,0 +1,54 @@
+﻿@using System.Web.UI.WebControls
+@using CA2_MovieFacts.Models
+@model CA2_MovieFacts.Models.Movie
+
+<div class="container">
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <h2>Create a new Movie</h2>
+        </div>
+    </div>
+
+    <div class="well">
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Enter Movie details here</legend> <br />
+
+        <div class="row">
+            <div class="form-group col-xs-10 col-md-2">
+                @Html.LabelFor(model => model.MovieTitle)
+                @Html.TextBoxFor(model => model.MovieTitle, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MovieTitle)
+            </div>
+
+            <div class="form-group col-xs-10 col-md-8">
+                @Html.LabelFor(model => model.MovieYear)
+                @Html.TextBoxFor(model => model.MovieYear, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MovieYear)
+            </div>
+
+            <div class="form-group col-xs-8">
+                @Html.LabelFor(model => model.MovieFacts)
+                @Html.TextAreaFor(model => model.MovieFacts, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MovieFacts)
+            </div>
+        </div>@*div row*@
+            <p>
+                <input type="submit" value="Create" class="btn btn-warning"/> 
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+            </p>
+
+        </fieldset>
+            }
+        </div>@*div panel-body*@
+    </div>@*div well*@
+</div>@*div container*@
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

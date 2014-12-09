@@ -1,0 +1,92 @@
+﻿@using System.Data;
+@using CA2_MovieFacts.Models;
+@model IEnumerable<CA2_MovieFacts.Models.Actor>
+<!--Expects a collection of Actors-->
+
+<div class="container">
+
+    <h2>
+        @ViewBag.PageTitle
+    </h2>
+
+    <div>
+        @*//Create new Actor button*@
+        @Html.ActionLink("Create New Actor", "Create", null, new { @class = "btn btn-success btn-lg" })
+
+        @*//Search form*@
+        <form class="navbar-form navbar-right" method="get" role="search">
+            <div class="form-group">
+                <input type="search" name="searchTerm" class="form-control" placeholder="Search for an Actor">
+            </div>
+            <button type="submit" value="Search" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbsp;Search</button>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-striped">
+                <tr>
+                    <th class="col-md-2">
+                        @*<h3>@Html.DisplayNameFor(model => model.ActorName)</h3>*@
+                        <h4>
+                            <a class="btn btn-group-sm btn-default" href="@Url.Action("Index", new { alphaOrder = @ViewBag.alphabetic })">
+                                &nbsp;Name
+                                @if (ViewBag.alphabetic == "desc")
+                                {
+                                    <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                                }
+                                else if (ViewBag.alphabetic == "asc")
+                                {
+                                    <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                                }
+                            </a>
+                        </h4>
+                    </th>
+                    <th class="col-md-7" align="justify">
+                        <h3> @Html.DisplayNameFor(model => model.Biography)</h3>
+                    </th>
+                    <th class="col-md-1"></th>
+                    <th class="col-md-2"></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <h4>@Html.DisplayFor(modelItem => item.ActorName)</h4>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Biography)
+                        </td>
+                        <td></td>
+                        <td>
+                            <div class="btn-group-vertical btn-block">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.ActorId }, new { @class = "btn btn-default" })
+                                @Html.ActionLink("Details", "Details", new { id = item.ActorId }, new { @class = "btn btn-default" })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.ActorId }, new { @class = "btn btn-default" })
+                            </div>
+                       </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts
+    {
+    <script>
+            $(function () { // ready event
+                var check = '@ViewBag.toast';
+
+                switch(check)
+                {
+                    case "Create":
+                        toastr.warning('A new actor has been added to the list of actors');
+                        break;
+                }
+
+            });
+    </script>
+}
